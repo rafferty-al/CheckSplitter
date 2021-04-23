@@ -1,12 +1,13 @@
 from wtforms import *
 from wtforms.validators import *
-from models import *
 from werkzeug.security import check_password_hash
+
+from app.database.models import db
 
 
 def nickname_free(form, field):
     nickname = field.data
-    check = User.get(nickname=nickname)
+    check = db.User.get(nickname=nickname)
     if check is not None:
         raise ValidationError('Никнейм %r занят' % nickname)
 
@@ -26,7 +27,7 @@ def pwd_check(form, field):
 
 def nickname_check(form, field):
     nickname = field.data
-    check = User.get(nickname=nickname)
+    check = db.User.get(nickname=nickname)
     if check is None:
         raise ValidationError('Пользователь с никнеймом %r не найден' % nickname)
 
@@ -34,7 +35,7 @@ def nickname_check(form, field):
 def pwd_match_check(form, field):
     nickname = form.nickname.data
     pwd = field.data
-    user = User.get(nickname=nickname)
+    user = db.User.get(nickname=nickname)
     if user:
         if not check_password_hash(user.password, pwd):
             raise ValidationError('Неверный пароль')

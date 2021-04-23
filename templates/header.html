@@ -25,7 +25,7 @@
         <!-- Navigation -->
           <nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
             <div class="container">
-              <a class="navbar-brand" href="{{ url_for("index") }}">Check Splitter</a>
+              <a class="navbar-brand" href="{{ url_for("app.index") }}">Check Splitter</a>
               <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
               </button>
@@ -40,23 +40,23 @@
 				  </li>
                   <li class="nav-item">
                   {% if cuser.current_session == None %}
-                    <a class="nav-link" href="{{ url_for('session_new')}}">Создание сессии</a>
+                    <a class="nav-link" href="{{ url_for('app.session_new')}}">Создание сессии</a>
                   {% else %}
-                      <a class="nav-link" href="{{ url_for('session_edit', sid=cuser.current_session.id)}}">Текущая сессия</a>
+                      <a class="nav-link" href="{{ url_for('app.session_edit', sid=cuser.current_session.id)}}">Текущая сессия</a>
                   {% endif %}
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" href="{{ url_for('check_credit')}}">Долги</a>
+                    <a class="nav-link" href="{{ url_for('app.check_credit')}}">Долги</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" href="{{ url_for('logout')}}">Выход</a>
+                    <a class="nav-link" href="{{ url_for('app.logout')}}">Выход</a>
                   </li>
                   {% else %}
                   <li class="nav-item">
-                    <a class="nav-link" href="{{ url_for('reg') }}">Регистрация</a>
+                    <a class="nav-link" href="{{ url_for('app.reg') }}">Регистрация</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" href="{{ url_for('login') }}">Вход</a>
+                    <a class="nav-link" href="{{ url_for('app.login') }}">Вход</a>
                   </li>
                   {% endif %}
                 </ul>

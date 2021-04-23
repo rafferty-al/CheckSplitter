@@ -7,6 +7,7 @@ authors = ["Alexander Yolkin <alexander.yolkin@agilecode.io>"]
 [tool.poetry.dependencies]
 python = "^3.8.5"
 Click="7.0"
+pydantic = "1.8.1"
 Flask="1.1.2"
 Flask-Login="0.5.0"
 Flask-WTF="0.14.3"
@@ -17,6 +18,7 @@ pony = {git = "https://github.com/ponyorm/pony.git", rev = "0c02f63ef1419bea3ddc
 Werkzeug="1.0.1"
 WTForms="2.3.3"
 Flask-Cors="3.0.10"
+psycopg2-binary = "2.8.5"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

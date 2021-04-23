@@ -66,7 +66,7 @@
                                       </button>
                                   </div>
                                   <div class="col-1 pl-1">
-                                          <a href="{{ url_for('delete_user', sid=session.id, uid=uis.user.id) }}" class="btn btn-dark btn-block d-flex justify-content-center">
+                                          <a href="{{ url_for('app.delete_user', sid=session.id, uid=uis.user.id) }}" class="btn btn-dark btn-block d-flex justify-content-center">
                                               <i class="material-icons" style="color: darkgray; cursor: pointer;font-size: 18px;line-height: 1.4;">
                                                delete_forever
                                               </i>
@@ -75,7 +75,7 @@
                               </div>
                           </li>
                           {% endfor %}
-                          <a href="{{ url_for('add_user',sid=session.id) }}" type="button" class="list-group-item list-group-item-action list-group-item-dark d-flex justify-content-center">
+                          <a href="{{ url_for('app.add_user',sid=session.id) }}" type="button" class="list-group-item list-group-item-action list-group-item-dark d-flex justify-content-center">
                               Добавить пользователя
                           </a>
                         </div>
@@ -87,11 +87,11 @@
                         <div id="orders_list" class="list-group d-flex">
                           {% for order in orders %}
 							<li class="list-group-item">
-							    <a href="{{ url_for('order_edit', sid=session.id, oid=order[0].id) }}" class="btn btn-primary btn-dark">
+							    <a href="{{ url_for('app.order_edit', sid=session.id, oid=order[0].id) }}" class="btn btn-primary btn-dark">
                                     {{ order[0].title }}
                                 </a>
 								<span class="float-right">
-								<a href="{{ url_for('order_delete',sid=session.id, oid=order[0].id) }}">
+								<a href="{{ url_for('app.order_delete',sid=session.id, oid=order[0].id) }}">
 									<i class="material-icons" style="color: darkgray; cursor: pointer;font-size: 32px;line-height: 1.4;">
 									   delete_forever
 									</i>
@@ -110,7 +110,7 @@
                                 <a>Цена: {{ order[0].price }}</a>
                             </li>
                           {% endfor %}
-                          <a href="{{ url_for('order_new', sid=session.id) }}" type="button" class="list-group-item list-group-item-action list-group-item-dark d-flex justify-content-center">
+                          <a href="{{ url_for('app.order_new', sid=session.id) }}" type="button" class="list-group-item list-group-item-action list-group-item-dark d-flex justify-content-center">
                               Добавить блюдо
                           </a>
                         <p></p>
