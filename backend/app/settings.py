@@ -11,7 +11,6 @@ class Settings(BaseSettings):
     PASSWORD: Optional[str]
     DB_NAME: Optional[str]
     IN_MEMORY: Optional[int]
-    SECRET_KEY: Optional[str]
 
 
 settings = Settings()
