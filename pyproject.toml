@@ -9,7 +9,6 @@ python = "^3.7"
 Flask = "^2.0.2"
 Flask-Login = "^0.5.0"
 Flask-Cors = "^3.0.10"
-pony = {git = "https://github.com/ponyorm/pony.git", rev = "0c02f63ef1419bea3ddcb6a94c956da1c7120423"}
 WTForms = "^2.3.3"
 pydantic = "^1.8.2"
 click = "^8.0.1"
@@ -19,6 +18,12 @@ MarkupSafe = "^2.0.1"
 Jinja2 = "^3.0.2"
 itsdangerous = "^2.0.1"
 Flask-WTF = "^0.15.1"
+pony = "^0.7.14"
+black = "^21.9b0"
+redis = "^3.5.3"
+pytest = "^6.2.5"
+factory-boy = "^3.2.0"
+pytest-flask = "^1.2.0"
 
 [tool.poetry.dev-dependencies]
 
