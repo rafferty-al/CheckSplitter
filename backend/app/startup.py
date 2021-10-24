@@ -34,7 +34,7 @@ def configure_app(app, testing=False):
 
 def configure_login(app):
     login_manager = LoginManager(app)
-    login_manager.login_view = "app.login"
+    login_manager.login_view = "app.auth.login_user"
     login_manager.login_message_category = "info"
 
     @login_manager.user_loader

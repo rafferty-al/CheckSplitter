@@ -10,7 +10,7 @@ class User(db.Entity, UserMixin):
     id = orm.PrimaryKey(int, auto=True)
     fullname = orm.Optional(str)
     password = orm.Required(str)
-    nickname = orm.Optional(str)
+    nickname = orm.Optional(str, unique=True)
     mastered_credits = orm.Set("Credit", reverse="master")
     slaved_credits = orm.Set("Credit", reverse="slave")
     sessions = orm.Set("UserInSession")
@@ -20,9 +20,6 @@ class User(db.Entity, UserMixin):
     @property
     def virtual(self):
         return self.password is "None"
-
-    def is_authenticated(self):
-        return True
 
     @property
     def current_session(self):
