@@ -1,16 +1,16 @@
 from datetime import datetime
 from collections import defaultdict
 from flask import render_template, request, flash, redirect, url_for, Blueprint
-from flask_login import login_user, current_user, logout_user, login_required
+from flask_login import current_user, login_required
 from flask_cors import cross_origin
 from werkzeug.security import generate_password_hash
 from pony.orm import select, commit
 
 from app.api.helpers.utils import debt_calc
 from backend.app.startup import db
-from backend.app.forms import RegForm, LoginForm, OrderItem, CreditForm, VirtualRegForm
+from backend.app.forms import RegForm, OrderItem, CreditForm, VirtualRegForm
 
-blueprint = Blueprint("app", __name__, url_prefix="")
+blueprint = Blueprint("main_app", __name__, url_prefix="")
 
 
 @blueprint.route("/", methods=["POST", "GET"])
@@ -80,7 +80,7 @@ def session_edit(sid):
             # TODO conditions when impossible to end the session
             session.end = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
             debt_calc(session, maintainers, users_dict, values)
-            return redirect(url_for("app.index"))
+            return redirect(url_for("app.main_app.index"))
         else:
             flash("Не хватает денег для оплаты счёта!", "error")
 
@@ -166,7 +166,7 @@ def delete_user(sid, uid):
     if num > 0:
         return redirect(url_for("app.session_edit", sid=sid))
     session.delete()
-    return redirect(url_for("app.index"))
+    return redirect(url_for("app.main_app.index"))
 
 
 @blueprint.route("/reg", methods=["POST", "GET"])
@@ -178,27 +178,8 @@ def reg():
             fullname=form.data["fullname"],
             password=generate_password_hash(form.data["pwd1"]),
         )
-        return redirect(url_for("app.index"))
+        return redirect(url_for("app.main_app.index"))
     return render_template("reg.html", form=form)
-
-
-@blueprint.route("/login", methods=["POST", "GET"])
-def login():
-    if current_user.is_authenticated:
-        return redirect(url_for("app.index"))
-    form = LoginForm(request.form)
-    if request.method == "POST" and form.validate():
-        user = db.User.get(nickname=form.data["nickname"])
-        login_user(user)
-        return redirect(url_for("app.index"))
-    return render_template("login.html", form=form, title="Вход")
-
-
-@blueprint.route("/logout")
-@login_required
-def logout():
-    logout_user()
-    return redirect(url_for("app.index"))
 
 
 @blueprint.route("/<int:sid>/order/new", methods=["POST", "GET"])

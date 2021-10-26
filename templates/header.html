@@ -25,7 +25,7 @@
         <!-- Navigation -->
           <nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
             <div class="container">
-              <a class="navbar-brand" href="{{ url_for("app.index") }}">Check Splitter</a>
+              <a class="navbar-brand" href="{{ url_for("app.main_app.index") }}">Check Splitter</a>
               <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
               </button>
@@ -53,10 +53,10 @@
                   </li>
                   {% else %}
                   <li class="nav-item">
-                    <a class="nav-link" href="{{ url_for('app.reg') }}">Регистрация</a>
+                    <a class="nav-link" href="{{ url_for('app.main_app.reg') }}">Регистрация</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" href="{{ url_for('app.login') }}">Вход</a>
+                    <a class="nav-link" href="{{ url_for('app.auth.login_user') }}">Вход</a>
                   </li>
                   {% endif %}
                 </ul>

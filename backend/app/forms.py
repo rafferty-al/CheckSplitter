@@ -27,22 +27,6 @@ def pwd_check(form, field):
         raise ValidationError("Пароли должны совпадать")
 
 
-def nickname_check(form, field):
-    nickname = field.data
-    check = db.User.get(nickname=nickname)
-    if check is None:
-        raise ValidationError("Пользователь с никнеймом %r не найден" % nickname)
-
-
-def pwd_match_check(form, field):
-    nickname = form.nickname.data
-    pwd = field.data
-    user = db.User.get(nickname=nickname)
-    if user:
-        if not check_password_hash(user.password, pwd):
-            raise ValidationError("Неверный пароль")
-
-
 def check_credit_form(form, field):
     from re import search
 
@@ -61,11 +45,6 @@ class RegForm(Form):
 class VirtualRegForm(Form):
     nickname = StringField("Никнейм", [InputRequired(), nickname_free])
     fullname = StringField("Полное имя", [InputRequired()])
-
-
-class LoginForm(Form):
-    nickname = StringField("Никнейм", [InputRequired(), nickname_check])
-    pwd = PasswordField("Пароль", [InputRequired(), pwd_match_check])
 
 
 class OrderItem(Form):
