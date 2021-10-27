@@ -82,9 +82,9 @@ class CheckSplitterTestSuite:
             headers.update(additional_headers)
         return headers
 
-    def get(self, endpoint: str, follow_redirects=True, **values):
+    def get(self, endpoint: str, **values):
         url = url_for(endpoint, **values)
-        return self.client.get(url, headers=self._get_headers(), follow_redirects=follow_redirects)
+        return self.client.get(url, headers=self._get_headers())
 
     def post(
         self,

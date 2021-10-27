@@ -3,7 +3,7 @@ from pony import orm
 from werkzeug.security import generate_password_hash
 
 from app.api.helpers.utils import success
-from backend.app.validators.auth import LoginSchema, RegisterSchema
+from backend.app.schemas.auth import LoginSchema, RegisterSchema
 from backend.app.startup import db
 
 

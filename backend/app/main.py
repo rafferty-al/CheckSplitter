@@ -7,7 +7,7 @@ from pydantic import ValidationError
 from backend.app.api.helpers.utils import error
 from backend.app.startup import init_orm, configure_app, configure_login
 from backend.app.api import app_blueprint
-from backend.app.validators.auth import AuthError
+from backend.app.schemas.auth import AuthError
 
 
 def create_app(testing=False):

@@ -1,14 +1,18 @@
-from pydantic import BaseModel, validator, ValidationError, constr
+from pydantic import BaseModel, validator
 from werkzeug.security import check_password_hash
 
 from backend.app.startup import db
 
 
-class AuthError(Exception):
+class BaseError(Exception):
     def __init__(self, location: str, description: str, status_code=400):
         self.location = location
         self.description = description
         self.status_code = status_code
+
+
+class AuthError(BaseError):
+    pass
 
 
 class LoginSchema(BaseModel):

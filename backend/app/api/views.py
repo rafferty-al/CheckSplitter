@@ -6,7 +6,6 @@ from flask_cors import cross_origin
 from werkzeug.security import generate_password_hash
 from pony.orm import select, commit
 
-from app.api.helpers.utils import debt_calc
 from backend.app.startup import db
 from backend.app.forms import RegForm, OrderItem, CreditForm, VirtualRegForm
 
@@ -32,70 +31,6 @@ def session_new():
         db.UserInSession(user=current_user, session=curr_session)
         commit()
     return redirect(url_for("app.session_edit", sid=curr_session.id))
-
-
-@blueprint.route("/session/<int:sid>/", methods=["POST", "GET"])
-@login_required
-def session_edit(sid):
-    session = db.Session.get(id=sid)
-    if session is None:
-        return render_template("404.html")
-    title = "Сессия %s" % (
-        session.title if session.title is not None else str(session.id)
-    )
-    users = select(u for u in session.users).order_by(lambda u: u.id)[:]
-    # Code above creates list of tuples, where one tuple contains (current order оbject, users of this order).
-    orders_with_users = []
-    users_in_order = []
-    for order in session.orders:
-        for uis in order.user_in_sessions:
-            users_in_order.append(uis.user)
-        orders_with_users.append((order, users_in_order))
-        users_in_order = []
-
-    if request.method == "POST" and "end_session" in request.form:
-        users_dict = {}
-        values = defaultdict(int)
-        orders = []
-        maintainers = {}
-        for uis in session.users:
-            users_dict.update({uis.user.nickname: uis.user.id})
-            maintainers.update({uis.user.nickname: uis.value})
-
-        for order in session.orders:
-            buyers = ""
-            for uis in order.user_in_sessions:
-                buyers += uis.user.nickname + " "
-            orders.append((order.title, order.price, buyers))
-
-        for title, price, users_ordered in orders:
-            count = len(users_ordered.split())
-            for user in users_ordered.split():
-                name = users_dict[user]
-                values[name] += price / count
-
-        should_be = sum(o[1] for o in orders)
-        maintained = sum(v for k, v in maintainers.items())
-        if should_be <= maintained:
-            # TODO conditions when impossible to end the session
-            session.end = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-            debt_calc(session, maintainers, users_dict, values)
-            return redirect(url_for("app.main_app.index"))
-        else:
-            flash("Не хватает денег для оплаты счёта!", "error")
-
-    if request.method == "POST" and "change_session_title" in request.form:
-        session.title = request.form["session_title"]
-        return redirect(url_for("app.session_edit", sid=sid))
-
-    return render_template(
-        "session_edit.html",
-        title=title,
-        session=session,
-        users=users,
-        orders=orders_with_users,
-        cuser=current_user,
-    )
 
 
 @blueprint.route("/session/<int:sid>/add_money", methods=["POST"])
