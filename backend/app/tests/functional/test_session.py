@@ -42,3 +42,4 @@ class TestSessionSuite(CheckSplitterTestSuite):
 
         assert response.status_code == 200
 
+
